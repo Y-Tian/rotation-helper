@@ -1,19 +1,19 @@
 import requests
 import base64
 
-import config.world_map_conf as world_map_conf
+import config.conf as conf
 from modules.mongo_driver import generic_push_metadata, WORLD_MAPS_COLL
 
 session = requests.session()
 
-all_world_maps: list = session.get(world_map_conf.BASE_URL_ENDPOINT_BUILDER).json()
+all_world_maps: list = session.get(conf.ALL_WORLDMAP_ENDPOINT).json()
 size_all_world_maps = len(all_world_maps)
 for index, world_map_id in enumerate(all_world_maps):
     if index % 20 == 0:
         print(f"Processing {index}/{size_all_world_maps}...")
 
     world_map_details_endpoint = (
-        f"{world_map_conf.BASE_URL_ENDPOINT_BUILDER}/{world_map_id}"
+        f"{conf.ALL_WORLDMAP_ENDPOINT}/{world_map_id}"
     )
 
     world_map_details: dict = session.get(world_map_details_endpoint).json()
@@ -36,7 +36,7 @@ for index, world_map_id in enumerate(all_world_maps):
         decoded_image_data = base64.b64decode(base64_image_data)
         size_decoded_image = len(decoded_image_data)
 
-        target_file = f"{world_map_conf.TARGET_FILE_PATH}/{target_file_name_builder}"
+        target_file = f"{conf.WORLD_MAPS_FILE_PATH}/{target_file_name_builder}"
         with open(target_file, "wb") as fw:
             fw.write(decoded_image_data)
 
