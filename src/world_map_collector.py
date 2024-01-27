@@ -42,8 +42,12 @@ for index, world_map_id in enumerate(all_world_maps):
             "target_file_name_builder": target_file_name_builder
         }
 
+        # NOTE: regional world maps contain 'links' to area maps - index this for faster reads on the web app
+        is_region_map = (len(world_map_details.get("links", [])) > 0)
+
         mongo_metadata_payload_builder = {
             "target_file_name_builder": target_file_name_builder,
+            "is_region_map": is_region_map,
             "raw": world_map_details
         }
 
