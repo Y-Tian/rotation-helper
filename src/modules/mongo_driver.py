@@ -12,6 +12,8 @@ MONGO_CLIENT = MongoClient(MONGO_CONNECTION_STRING)
 
 MAP_DATA_DB = MONGO_CLIENT["MapData"]
 WORLD_MAPS_COLL = MAP_DATA_DB["world_maps"]
+MAP_COLL = MAP_DATA_DB["maps"]
+MOB_COLL = MAP_DATA_DB["mobs"]
 
 def generic_push_metadata(target_coll, search_index_payload: dict, all_metadata: dict, upsert=True):
     timestamps = {
